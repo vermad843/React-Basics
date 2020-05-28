@@ -5,7 +5,7 @@ import {connect} from 'react-redux';
 class App extends Component {
  
   render() {
-    const {age} = this.props;
+    const {age, history} = this.props;
     return (
        <div className = "App">
           <div>
@@ -20,6 +20,23 @@ class App extends Component {
           <button onClick = {this.props.onAgeDown}>
              Age down
           </button>
+          <br/>
+          <div>
+            History
+          </div>
+          <div>
+             <ul>
+               {
+                 history.map((el,i) => {
+                   return (
+                    <li className = "historyItem" key = {i} >
+                     {el.age}
+                    </li>
+                   );
+                 })
+               }
+             </ul>
+          </div>
         </div>
     );
   }
@@ -29,7 +46,8 @@ class App extends Component {
 //making state available to components
 const mapStateToProps = (state) => {
   return {
-    age : state.age
+    age : state.age,
+    history : state.history
   } 
 }
 
@@ -38,9 +56,9 @@ const mapStateToProps = (state) => {
 // actions have a type and a payload(what needs to be changed)
 
 const mapDispachToProps = (dispach) => {
-  return {
-    onAgeUp :  () => dispach({type : 'AGE_UP'}),
-    onAgeDown :  () => dispach({type : 'AGE_DOWN'}),
+  return { 
+    onAgeUp :  () => dispach({type : 'AGE_UP', value : 1}),
+    onAgeDown :  () => dispach({type : 'AGE_DOWN' , value : 1}),
   }
 }
 

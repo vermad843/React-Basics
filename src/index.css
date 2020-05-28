@@ -9,3 +9,12 @@ input[type = "checkbox"] {
   display : inline;
   width : auto;
 }
+
+
+.historyItem {
+  list-style-type: none;
+  margin : 10px;
+  padding-top : 10px;
+  padding-bottom: 10px;
+  background-color:white;
+}
