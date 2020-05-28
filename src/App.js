@@ -1,30 +1,11 @@
 import React, { Component } from 'react'
+import {connect} from 'react-redux';
 
 
 class App extends Component {
-  constructor() {
-    super();
-    this.state = {
-      age : 21
-    }
-  }
  
-  onAgeUp = () => {
-    this.setState({
-      ...this.state,
-      age : ++this.state.age
-    })
-  }
-
-  onAgeDown = () => {
-    this.setState({
-      ...this.state,
-      age : --this.state.age
-    })
-  }
-
   render() {
-    const {age} = this.state;
+    const {age} = this.props;
     return (
        <div className = "App">
           <div>
@@ -33,10 +14,10 @@ class App extends Component {
                  {age}
              </span>
           </div>
-          <button onClick = {this.onAgeUp}>
+          <button onClick = {this.props.onAgeUp}>
              Age Up
           </button>
-          <button onClick = {this.onAgeDown}>
+          <button onClick = {this.props.onAgeDown}>
              Age down
           </button>
         </div>
@@ -44,4 +25,23 @@ class App extends Component {
   }
 }
 
-export default App;
+
+//making state available to components
+const mapStateToProps = (state) => {
+  return {
+    age : state.age
+  } 
+}
+
+
+// converting methods into actions 
+// actions have a type and a payload(what needs to be changed)
+
+const mapDispachToProps = (dispach) => {
+  return {
+    onAgeUp :  () => dispach({type : 'AGE_UP'}),
+    onAgeDown :  () => dispach({type : 'AGE_DOWN'}),
+  }
+}
+
+export default connect(mapStateToProps,mapDispachToProps)(App);
