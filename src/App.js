@@ -4,70 +4,59 @@ import './App.css';
 
 class App extends Component {
     state = {
-        dropdown : 'Name',
-        firstName : '',
-        gender : '',
+        firstName : 'Dk',
+        lastName : 'Verma',
         data : []
     }
 
     handleChange = (e) => {
-        this.setState({
-            [e.target.name] : e.target.value
-        })
-    }
-
-    formSubmitted = (e) => {
-      e.preventDefault();
-      this.setState({
-          data : [
+        let dataList = this.state.data;
+        let check = e.target.checked;
+        if(check) {
+          this.setState({
+            data : [
               ...this.state.data,
-              {
-                dropdown : this.state.dropdown,
-                firstName : this.state.firstName,
-                gender : this.state.gender, 
-              }
-          ]
-      })
+              this.state[e.target.name]
+            ]
+          })
+         }
+          else {
+          let index = dataList.indexOf(this.state[e.target.name]);
+          console.log(index)
+          if(index > -1) {
+            dataList.splice(index, 1);
+            this.setState({
+              data : dataList
+            })
+          }
+        }
     }
 
     render() {
-        const {dropdown,firstName,gender,} = this.state;
         return (
-            <form  onSubmit = {this.formSubmitted}>
-              <select name = "dropdown"  onChange = {this.handleChange} value = {dropdown}>
-                  <option>DK </option>
-                 <option >SK</option>
-                 <option >KK</option>
-                 <option >RK</option>
-                 <option>None</option>
-              </select>
-               <br/>
-              <div>
-                  <input
-                    value = {firstName}
-                    type = "text"
-                     name = "firstName"
-                     onChange = {this.handleChange}   
-                  />
-              </div>
-              <div>
-                 <input
-                    value = {gender}
-                    name = "gender"
-                     value = "male"
-                    type = "radio"
-                    onChange = {this.handleChange}
-                 /> Male
-                 <input
-                    value = {gender}
-                    name = "gender"
-                     value = "female"
-                    type = "radio"
-                    onChange = {this.handleChange}
-                 /> female
-              </div>
-              <button type = "submit">Submit</button>
-            </form>
+            <div>
+                <h1>Hello World</h1>
+                <div>
+                   <label>
+                        <input
+                           name = "firstName"
+                           type = "checkbox"
+                           onChange = {this.handleChange}
+                        />
+                        firstName
+                   </label>
+                </div> 
+                <div>
+                   <label>
+                        <input
+                           name = "lastName"
+                           type = "checkbox"
+                           onChange = {this.handleChange}
+                        />
+                        lastName
+                   </label>
+                </div>            
+            </div>
         );
     }
 }
