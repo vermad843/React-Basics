@@ -4,41 +4,70 @@ import './App.css';
 
 class App extends Component {
     state = {
-        eligible : false
+        dropdown : 'Name',
+        firstName : '',
+        gender : '',
+        data : []
     }
 
     handleChange = (e) => {
-      this.setState({
-          eligible : !this.state.eligible
-       })
+        this.setState({
+            [e.target.name] : e.target.value
+        })
     }
 
+    formSubmitted = (e) => {
+      e.preventDefault();
+      this.setState({
+          data : [
+              ...this.state.data,
+              {
+                dropdown : this.state.dropdown,
+                firstName : this.state.firstName,
+                gender : this.state.gender, 
+              }
+          ]
+      })
+    }
 
     render() {
-        const{eligible} = this.state;
+        const {dropdown,firstName,gender,} = this.state;
         return (
-            <> 
-               {
-                   eligible ?  (<div>
-                        <h1>Eligibility</h1></div>)
-                :  (<div>
-                   <h1>Header</h1>
-                    </div>)
-               }     
-               <form>
-                   <input
+            <form  onSubmit = {this.formSubmitted}>
+              <select name = "dropdown"  onChange = {this.handleChange} value = {dropdown}>
+                  <option>DK </option>
+                 <option >SK</option>
+                 <option >KK</option>
+                 <option >RK</option>
+                 <option>None</option>
+              </select>
+               <br/>
+              <div>
+                  <input
+                    value = {firstName}
+                    type = "text"
                      name = "firstName"
-                     type = "text"
-                   />
-               </form>
-               <div>
-                   <button
-                       onClick = {this.handleChange}
-                      >
-                       Check
-                   </button>
-               </div>
-            </>
+                     onChange = {this.handleChange}   
+                  />
+              </div>
+              <div>
+                 <input
+                    value = {gender}
+                    name = "gender"
+                     value = "male"
+                    type = "radio"
+                    onChange = {this.handleChange}
+                 /> Male
+                 <input
+                    value = {gender}
+                    name = "gender"
+                     value = "female"
+                    type = "radio"
+                    onChange = {this.handleChange}
+                 /> female
+              </div>
+              <button type = "submit">Submit</button>
+            </form>
         );
     }
 }
